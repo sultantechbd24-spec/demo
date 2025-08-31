@@ -1,169 +1,142 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Watch Ad</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <style>
-        body {
-            font-family: sans-serif;
-            background-color: #f0f2f5;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            text-align: center;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        .ad-container {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            width: 90%;
-            max-width: 400px;
-            text-align: center;
-            cursor: default;
-        }
-        .timer-section {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #fff;
-            padding: 5px 10px;
-            border-radius: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        #ad-timer {
-            font-size: 16px;
-            font-weight: bold;
-            color: #e58200;
-        }
-        .ad-content {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-radius: 8px;
-            overflow: hidden;
-            background-color: #f0f0f0;
-        }
-        .ad-text {
-            font-size: 14px;
-            margin: 15px 0 10px;
-            font-weight: bold;
-            color: #666;
-        }
-        .continue-button {
-            background-color: #2575fc;
-            color: #fff;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 25px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            width: 100%;
-            max-width: 250px;
-            margin-top: 10px;
-        }
-        .continue-button:hover {
-            background-color: #1a56c0;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Watch Ad</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      flex-direction: column;
+      text-align: center;
+    }
+    .timer-section {
+      display: inline-block;
+      margin: 15px auto;
+      padding: 5px 15px;
+      border-radius: 20px;
+      background: #fff;
+      font-weight: bold;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      color: #e58200;
+    }
+    .ad-box {
+      width: 92%;
+      max-width: 420px;
+      margin: auto;
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      overflow: hidden;
+      text-align: left;
+    }
+    .ad-img {
+      width: 100%;
+      display: block;
+    }
+    .ad-text-container {
+      padding: 10px 15px;
+    }
+    .ad-title {
+      font-size: 16px;
+      font-weight: bold;
+      margin: 0;
+    }
+    .ad-subtext {
+      font-size: 14px;
+      color: #666;
+      margin: 5px 0 0;
+    }
+    .continue-button {
+      display: none; /* শুরুতে লুকানো */
+      background-color: #2575fc;
+      color: #fff;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 25px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+      margin: 20px auto;
+      width: 90%;
+      max-width: 250px;
+    }
+    .continue-button:hover {
+      background-color: #1a56c0;
+    }
+    .reward-text {
+      margin: 12px 0 0;
+      font-weight: bold;
+      color: #444;
+    }
+  </style>
 </head>
 <body>
-    <div class="ad-container">
-        <div class="timer-section">
-            <span id="ad-timer">00:12</span>
-        </div>
-        <div class="ad-content" id="ad-placement">
-             <script type="text/javascript" async src="//pl27408564.revenuecpmgate.com/6f/9e/55/6f9e557cf4f6d1ad34e52bf37ab2156a.js"></script>
-        </div>
-        <p class="ad-text">Click to get the reward!</p>
-        <button class="continue-button">Continue</button>
+  <!-- Timer -->
+  <div class="timer-section">
+    <span id="ad-timer">00:12</span>
+  </div>
+
+  <!-- Ad block -->
+  <div class="ad-box">
+    <img class="ad-img" src="https://i.ibb.co/2WqScRW/ad-sample.jpg" alt="Ad Image">
+    <div class="ad-text-container">
+      <p class="ad-title">Spin and Win ৳5,000 Today!</p>
+      <p class="ad-subtext">Daily cash bonus, and free spins.</p>
     </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const adTimer = document.getElementById('ad-timer');
-            const adTimeRequired = 12; 
-            let timer = adTimeRequired;
-            let countdownInterval = null;
-            const continueButton = document.querySelector('.continue-button');
-            const adText = document.querySelector('.ad-text');
-            
-            // টেলিগ্রামের ব্যাকগ্রাউন্ড কালার সঠিকভাবে সেট করা হচ্ছে
-            if (window.Telegram && Telegram.WebApp) {
-                Telegram.WebApp.ready();
-                const bgColor = Telegram.WebApp.themeParams.bg_color;
-                if (bgColor) {
-                    document.body.style.backgroundColor = bgColor;
-                }
-            } else {
-                 // যদি টেলিগ্রাম ওয়েবঅ্যাপ না থাকে, তাহলে ডিফল্ট ব্যাকগ্রাউন্ড কালার ব্যবহার করা হবে
-                 document.body.style.backgroundColor = '#f0f2f5';
-            }
-            
-            // টাইমার ও কন্টিনিউ বাটনের কার্যকারিতা
-            countdownInterval = setInterval(() => {
-                timer--;
-                adTimer.textContent = `00:${timer.toString().padStart(2, '0')}`;
-                if (timer <= 0) {
-                    clearInterval(countdownInterval);
-                    adTimer.style.display = 'none';
-                    adText.textContent = 'ক্লিক করে পুরস্কার নিন!';
-                    continueButton.style.display = 'block';
-                    document.body.style.cursor = 'pointer';
-                }
-            }, 1000);
-            
-            // কন্টিনিউ বাটনে ক্লিক করলে অ্যাড লোড হবে এবং টাস্ক কমপ্লিট হবে
-            continueButton.addEventListener('click', (event) => {
-                const adLink = localStorage.getItem('adLink');
-                if (adLink) {
-                    localStorage.setItem('adClicked', 'true');
-                    window.open(adLink, '_blank');
-                }
-            });
+  </div>
 
-            // যখন অ্যাড পেজ থেকে ফিরে আসা হবে, তখন এই ইভেন্টটি কাজ করবে
-            window.addEventListener('focus', () => {
-                const pendingTaskId = localStorage.getItem('pendingTaskId');
-                const adClicked = localStorage.getItem('adClicked');
-                if (pendingTaskId && adClicked) {
-                    // টাস্ক কমপ্লিট হয়েছে, তাই লোকাল স্টোরেজ থেকে ডেটা মুছে দিচ্ছি
-                    localStorage.removeItem('pendingTaskId');
-                    localStorage.removeItem('adClicked');
-                    // হোমপেজে ফিরে যাচ্ছি
-                    window.location.href = 'index.html';
-                }
-            });
+  <!-- Reward text -->
+  <p class="reward-text" id="reward-text">Wait for the timer to finish...</p>
 
-            // যদি ব্যবহারকারী অ্যাড পেজে ক্লিক না করে ব্যাক বাটন চাপেন, তখন সরাসরি হোমপেজে ফিরে যাবে
-            if (window.Telegram && window.Telegram.WebApp) {
-                 Telegram.WebApp.onEvent('backButtonClicked', function() {
-                     const adClicked = localStorage.getItem('adClicked');
-                     if (!adClicked) {
-                         window.location.href = 'index.html';
-                     }
-                 });
-                 Telegram.WebApp.ready();
-            } else {
-                 window.onpopstate = function() {
-                     const adClicked = localStorage.getItem('adClicked');
-                     if (!adClicked) {
-                         window.location.href = 'index.html';
-                     }
-                 };
-            }
+  <!-- Continue button -->
+  <button class="continue-button" id="continue-btn">Continue</button>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const adTimer = document.getElementById("ad-timer");
+      const continueBtn = document.getElementById("continue-btn");
+      const rewardText = document.getElementById("reward-text");
+
+      let timer = 12;
+      const countdown = setInterval(() => {
+        timer--;
+        adTimer.textContent = `00:${timer.toString().padStart(2, '0')}`;
+        if (timer <= 0) {
+          clearInterval(countdown);
+          adTimer.style.display = "none";
+          rewardText.textContent = "✅ Click to get the reward!";
+          continueBtn.style.display = "block";
+        }
+      }, 1000);
+
+      // Telegram theme background সেট করা
+      if (window.Telegram && Telegram.WebApp) {
+        Telegram.WebApp.ready();
+        document.body.style.backgroundColor =
+          Telegram.WebApp.themeParams.bg_color || "#f0f2f5";
+      }
+
+      // Continue button click
+      continueBtn.addEventListener("click", () => {
+        window.open("https://your-ad-link.com", "_blank");
+      });
+
+      // Telegram back button
+      if (window.Telegram && Telegram.WebApp) {
+        Telegram.WebApp.onEvent("backButtonClicked", () => {
+          window.location.href = "index.html";
         });
-    </script>
+      }
+    });
+  </script>
 </body>
 </html>
