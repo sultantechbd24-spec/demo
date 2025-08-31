@@ -17,8 +17,9 @@
     html,body{height:100%}
     body{
       margin:0; font-family:sans-serif; background: var(--tg-bg);
-      display:flex; align-items:center; justify-content:center;
+      display:flex; flex-direction: column; align-items:center; justify-content:center;
       -webkit-tap-highlight-color: transparent;
+      padding: 20px;
     }
     .sheet{
       width: min(680px, 96vw);
@@ -69,6 +70,13 @@
       font-weight:700; font-size:16px; padding: 14px 22px;
       border:none; border-radius: 26px; cursor:pointer;
     }
+    #ad-timer {
+      font-size: 16px;
+      font-weight: bold;
+      color: #e58200;
+      margin-bottom: 10px;
+      display: none;
+    }
   </style>
 </head>
 <body>
@@ -76,23 +84,31 @@
     <div class="titlebar">
       <div style="font-weight:700;font-size:20px; color:var(--tg-text)">রাতের বিনোদন</div>
     </div>
-
-    <div class="ad-bubble">
-      <div class="ad-slot" id="ad-slot">
-        <script type="text/javascript" async src="//pl27408564.revenuecpmgate.com/6f/9e/55/6f9e557cf4f6d1ad34e52bf37ab2156a.js"></script>
-      </div>
-      <div class="ad-badge">Ad</div>
+    
+    <div id="ad-content-wrapper" style="display: none;">
+        <div class="ad-bubble">
+            <div class="ad-slot" id="ad-slot">
+                <script type="text/javascript" async src="//pl27408564.revenuecpmgate.com/6f/9e/55/6f9e557cf4f6d1ad34e52bf37ab2156a.js"></script>
+            </div>
+            <div class="ad-badge">Ad</div>
+        </div>
+        <div class="provider">ads by Monetag</div>
+    </div>
+    
+    <div id="loading-message" style="text-align: center; padding: 20px; font-size: 18px; color: var(--tg-text);">
+      অ্যাড লোড হচ্ছে...
     </div>
 
-    <div class="provider">ads by Monetag</div>
-
-    <div class="tooltip">Click to get the reward!</div>
-    <button class="btn" id="btn-continue">Continue</button>
+    <div class="tooltip" id="tooltip-message" style="display:none;"></div>
+    
+    <div style="display: flex; flex-direction: column; align-items: center;">
+      <span id="ad-timer">00:12</span>
+      <button class="btn" id="btn-continue" style="display:none;">Continue</button>
+    </div>
     <div class="dot"></div>
   </div>
 
   <script>
-    // Telegram theme + expand
     if (window.Telegram && Telegram.WebApp) {
       Telegram.WebApp.ready();
       Telegram.WebApp.expand();
@@ -102,37 +118,47 @@
       } catch(e){}
     }
 
-    const btn = document.getElementById('btn-continue');
+    const adContentWrapper = document.getElementById('ad-content-wrapper');
+    const loadingMessage = document.getElementById('loading-message');
+    const adTimer = document.getElementById('ad-timer');
+    const tooltipMessage = document.getElementById('tooltip-message');
+    const btnContinue = document.getElementById('btn-continue');
+    
+    let countdownInterval;
+    const adTimeRequired = 12;
 
-    function injectClickAd() {
-      // চাইলে “ক্লিক হলে” আরেকটা click-under/adnetwork js ঢোকাও
-      // উদাহরণ (নিজের কী বসাবে):
-      /*
-      const s = document.createElement('script');
-      s.async = true;
-      s.src = "https://www.highperformanceformat.com/02a9c12a5270a25efa5325c0e42ffc59/invoke.js";
-      document.body.appendChild(s);
-      */
+    function startAdProcess() {
+        loadingMessage.style.display = 'none';
+        adContentWrapper.style.display = 'block';
+        adTimer.style.display = 'block';
+        tooltipMessage.style.display = 'inline-block';
+        tooltipMessage.textContent = "Click to get the reward!";
+
+        let timer = adTimeRequired;
+        countdownInterval = setInterval(() => {
+            timer--;
+            adTimer.textContent = `00:${timer.toString().padStart(2, '0')}`;
+            if (timer <= 0) {
+                clearInterval(countdownInterval);
+                adTimer.style.display = 'none';
+                tooltipMessage.textContent = "ক্লিক করে পুরস্কার নিন!";
+                btnContinue.style.display = 'block';
+                document.body.style.cursor = 'pointer';
+            }
+        }, 1000);
     }
 
-    btn.addEventListener('click', () => {
-      // 1) অপশনাল: ক্লিক-অ্যাড
-      injectClickAd();
+    setTimeout(startAdProcess, 2000);
 
-      // 2) টাস্ক ট্র্যাক
-      localStorage.setItem('adClicked', 'true');
-
-      // 3) লিঙ্ক ওপেন
-      const adLink = localStorage.getItem('adLink') || 'https://example.com/';
-      window.open(adLink, '_blank', 'noopener');
-
-      // 4) ইউজার ব্যাক এলে panel.html ফোকাস ইভেন্টে টাস্ক কমে যাবে
+    btnContinue.addEventListener('click', () => {
+        localStorage.setItem('adClicked', 'true');
+        const adLink = localStorage.getItem('adLink') || 'https://example.com/';
+        window.open(adLink, '_blank', 'noopener');
     });
 
-    // বটের ব্যাক বাটনে চাপলে panel.html-এ ফেরত
     if (window.Telegram && Telegram.WebApp) {
-      Telegram.WebApp.onEvent('backButtonClicked', () => { history.back(); });
-      Telegram.WebApp.BackButton.show();
+        Telegram.WebApp.onEvent('backButtonClicked', () => { history.back(); });
+        Telegram.WebApp.BackButton.show();
     }
   </script>
 </body>
