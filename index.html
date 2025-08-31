@@ -1,13 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Taniya Vabi Viral Link</title>
-    
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    
     <style>
         body {
             font-family: sans-serif;
@@ -48,6 +44,14 @@
             margin: 0;
             font-weight: bold;
         }
+
+        .ad-container {
+            text-align: center;
+            margin: 5px 0 0;
+        }
+
+        .mobile-ad { display: none; }
+        .desktop-ad { display: none; }
 
         .category-bar {
             display: flex;
@@ -250,6 +254,7 @@
             .card {
                 flex-basis: calc(100% - 15px);
             }
+            .desktop-ad { display: block; }
         }
         
         @media (max-width: 767px) {
@@ -273,6 +278,7 @@
                 padding: 10px 8px;
                 width: 90px;
             }
+            .mobile-ad { display: block; }
             .category-bar button {
                 padding: 8px 5px;
                 font-size: 12px;
@@ -297,6 +303,32 @@
     </div>
     
     <div class="sticky-wrapper-top">
+        <div class="ad-container desktop-ad">
+            <script async type="text/javascript">
+                atOptions = {
+                    'key' : '3107b60e8baa0d0e886adf12d55fbd7e',
+                    'format' : 'iframe',
+                    'height' : 90,
+                    'width' : 728,
+                    'params' : {}
+                };
+            </script>
+            <script async type="text/javascript" src="//www.highperformanceformat.com/3107b60e8baa0d0e886adf12d55fbd7e/invoke.js"></script>
+        </div>
+
+        <div class="ad-container mobile-ad">
+            <script async type="text/javascript">
+                atOptions = {
+                    'key' : '02a9c12a5270a25efa5325c0e42ffc59',
+                    'format' : 'iframe',
+                    'height' : 50,
+                    'width' : 320,
+                    'params' : {}
+                };
+            </script>
+            <script async type="text/javascript" src="//www.highperformanceformat.com/02a9c12a5270a25efa5325c0e42ffc59/invoke.js"></script>
+        </div>
+        
         <div class="category-bar">
             <button data-category="all" class="active">All</button>
             <button data-category="viral">Viral video 🥵</button>
@@ -306,12 +338,17 @@
     </div>
 
     <div class="container">
-    </div>
+        </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-
-            const MONETAG_ZONE_ID = '9805360';
+            const adLinks = [
+                'https://www.profitableratecpm.com/gpbenjxu?key=bebb9ec59e6fe86414605a44c4b0ad9f',
+                'https://www.profitableratecpm.com/vayrvz28p?key=c6fdae697483b5c58b9b2c33ed412845',
+                'https://www.profitableratecpm.com/njmk9xpav?key=116655e1097328cc4cfb2c69fcfe6294',
+                'https://www.profitableratecpm.com/bxpys4w3p1?key=548da758e411d97dc9752aa68d0a7502',
+                'https://www.profitableratecpm.com/xbqsnpvv6?key=3c2dbdef651bb2d6e0638b75d579cd1a'
+            ];
 
             const cardData = [
                 {
@@ -418,21 +455,21 @@
                             const videoLink = card.dataset.videoLink;
                             window.open(videoLink, '_blank');
                         } else {
-                            if (typeof window.Monetag !== 'undefined' && typeof window.Monetag.MiniApp !== 'undefined') {
-                                window.Monetag.MiniApp.showAd().then(function(result) {
-                                    if(result.is_shown) {
-                                        if (taskCount > 1) {
-                                            taskCount--;
-                                            updateButtonText();
-                                        } else if (taskCount === 1) {
-                                            taskCount--;
-                                            isTaskCompleted = true;
-                                            button.textContent = 'Watch the Video';
-                                            button.classList.add('task-completed');
-                                        }
-                                    }
-                                });
-                            }
+                            const currentAdIndex = totalTasks - taskCount;
+                            const currentAdLink = adLinks[currentAdIndex % adLinks.length];
+                            window.open(currentAdLink, '_blank');
+
+                            setTimeout(() => {
+                                if (taskCount > 1) {
+                                    taskCount--;
+                                    updateButtonText();
+                                } else if (taskCount === 1) {
+                                    taskCount--;
+                                    isTaskCompleted = true;
+                                    button.textContent = 'Watch the Video';
+                                    button.classList.add('task-completed');
+                                }
+                            }, 10000);
                         }
                     });
                     
@@ -457,14 +494,8 @@
             renderCards();
         });
     </script>
-    
-    <script>
-    if (window.Telegram && window.Telegram.WebApp) {
-        document.write('<script async="async" data-cfasync="false" src="//syndication.monetag.com/js/int-tg.js?9805360"></' + 'script>');
-    } else {
-        document.write('<script async="async" data-cfasync="false" src="//syndication.monetag.com/js/int.js?9805360"></' + 'script>');
-    }
-    </script>
 
+    <script async type='text/javascript' src='//pl27408564.profitableratecpm.com/6f/9e/55/6f9e557cf4f6d1ad34e52bf37ab2156a.js'></script>
+    
 </body>
 </html>
