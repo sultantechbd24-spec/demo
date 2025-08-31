@@ -20,7 +20,6 @@
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
-        
         .ad-container {
             background-color: #fff;
             padding: 20px;
@@ -48,7 +47,6 @@
         }
         .ad-content {
             width: 100%;
-            height: 300px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -87,37 +85,19 @@
             <span id="ad-timer">00:12</span>
         </div>
         <div class="ad-content" id="ad-placement">
-             </div>
+             <script type="text/javascript" async src="//pl27408564.revenuecpmgate.com/6f/9e/55/6f9e557cf4f6d1ad34e52bf37ab2156a.js"></script>
+        </div>
         <p class="ad-text">Click to get the reward!</p>
         <button class="continue-button">Continue</button>
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const adTimer = document.getElementById('ad-timer');
-            const adTimeRequired = 12; // 12 seconds
+            const adTimeRequired = 12; 
             let timer = adTimeRequired;
             let countdownInterval = null;
             const continueButton = document.querySelector('.continue-button');
             const adText = document.querySelector('.ad-text');
-            const adPlacement = document.getElementById('ad-placement');
-            
-            // এখানে আপনার সবগুলো Social Bar অ্যাড কোডের URL যুক্ত করুন
-            // শুধুমাত্র src="" এর ভিতরের URL গুলো প্রয়োজন।
-            const socialBarUrls = [
-                '//pl27408564.revenuecpmgate.com/6f/9e/55/6f9e557cf4f6d1ad34e52bf37ab2156a.js',
-                // এখানে আপনার অন্য Social Bar কোডের URL গুলো স্ট্রিং হিসেবে যোগ করুন
-                // যেমন: '//example.com/other-social-bar-code.js',
-                //       '//another-example.com/third-social-bar-code.js'
-            ];
-            
-            // একটি র্যান্ডম অ্যাড কোডের URL নির্বাচন করা হচ্ছে
-            const randomUrl = socialBarUrls[Math.floor(Math.random() * socialBarUrls.length)];
-            
-            // নতুন স্ক্রিপ্ট ট্যাগ তৈরি করে লোড করা হচ্ছে
-            const script = document.createElement('script');
-            script.type = 'text/javascript';
-            script.src = randomUrl;
-            document.head.appendChild(script);
             
             // টেলিগ্রামের ব্যাকগ্রাউন্ড কালার ব্যবহার করা হচ্ছে
             if (window.Telegram && Telegram.WebApp) {
@@ -156,15 +136,12 @@
                 const pendingTaskId = localStorage.getItem('pendingTaskId');
                 const adClicked = localStorage.getItem('adClicked');
                 if (pendingTaskId && adClicked) {
-                    // টাস্ক কমপ্লিট হয়েছে, তাই লোকাল স্টোরেজ থেকে ডেটা মুছে দিচ্ছি
                     localStorage.removeItem('pendingTaskId');
                     localStorage.removeItem('adClicked');
-                    // হোমপেজে ফিরে যাচ্ছি
                     window.location.href = 'index.html';
                 }
             });
 
-            // ব্যাক বাটন চাপলে সরাসরি হোমপেজে নিয়ে যাবে
             if (window.Telegram && window.Telegram.WebApp) {
                  Telegram.WebApp.onEvent('backButtonClicked', function() {
                     window.location.href = 'index.html';
@@ -179,3 +156,4 @@
     </script>
 </body>
 </html>
+
