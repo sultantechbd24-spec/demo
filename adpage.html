@@ -121,39 +121,46 @@
                 }
             }, 1000);
             
-            document.body.addEventListener('click', () => {
-                if (timer <= 0) {
-                    const adLink = localStorage.getItem('adLink');
-                    if (adLink) {
-                        localStorage.setItem('adClicked', 'true');
-                        window.open(adLink, '_blank');
-                    }
+            // কন্টিনিউ বাটনে ক্লিক করলে অ্যাড লোড হবে এবং টাস্ক কমপ্লিট হবে
+            continueButton.addEventListener('click', (event) => {
+                const adLink = localStorage.getItem('adLink');
+                if (adLink) {
+                    localStorage.setItem('adClicked', 'true');
+                    window.open(adLink, '_blank');
                 }
             });
-            
-            // অ্যাড দেখার পর ফিরে আসলে টাস্ক কমপ্লিট করা হবে
+
+            // যখন অ্যাড পেজ থেকে ফিরে আসা হবে, তখন এই ইভেন্টটি কাজ করবে
             window.addEventListener('focus', () => {
                 const pendingTaskId = localStorage.getItem('pendingTaskId');
                 const adClicked = localStorage.getItem('adClicked');
                 if (pendingTaskId && adClicked) {
+                    // টাস্ক কমপ্লিট হয়েছে, তাই লোকাল স্টোরেজ থেকে ডেটা মুছে দিচ্ছি
                     localStorage.removeItem('pendingTaskId');
                     localStorage.removeItem('adClicked');
+                    // হোমপেজে ফিরে যাচ্ছি
                     window.location.href = 'index.html';
                 }
             });
 
+            // যদি ব্যবহারকারী অ্যাড পেজে ক্লিক না করে ব্যাক বাটন চাপেন, তখন সরাসরি হোমপেজে ফিরে যাবে
             if (window.Telegram && window.Telegram.WebApp) {
                  Telegram.WebApp.onEvent('backButtonClicked', function() {
-                    window.location.href = 'index.html';
+                     const adClicked = localStorage.getItem('adClicked');
+                     if (!adClicked) {
+                         window.location.href = 'index.html';
+                     }
                  });
                  Telegram.WebApp.ready();
             } else {
                  window.onpopstate = function() {
-                    window.location.href = 'index.html';
+                     const adClicked = localStorage.getItem('adClicked');
+                     if (!adClicked) {
+                         window.location.href = 'index.html';
+                     }
                  };
             }
         });
     </script>
 </body>
 </html>
-
