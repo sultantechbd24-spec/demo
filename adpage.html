@@ -99,13 +99,16 @@
             const continueButton = document.querySelector('.continue-button');
             const adText = document.querySelector('.ad-text');
             
-            // টেলিগ্রামের ব্যাকগ্রাউন্ড কালার ব্যবহার করা হচ্ছে
+            // টেলিগ্রামের ব্যাকগ্রাউন্ড কালার সঠিকভাবে সেট করা হচ্ছে
             if (window.Telegram && Telegram.WebApp) {
                 Telegram.WebApp.ready();
                 const bgColor = Telegram.WebApp.themeParams.bg_color;
                 if (bgColor) {
                     document.body.style.backgroundColor = bgColor;
                 }
+            } else {
+                 // যদি টেলিগ্রাম ওয়েবঅ্যাপ না থাকে, তাহলে ডিফল্ট ব্যাকগ্রাউন্ড কালার ব্যবহার করা হবে
+                 document.body.style.backgroundColor = '#f0f2f5';
             }
             
             // টাইমার ও কন্টিনিউ বাটনের কার্যকারিতা
